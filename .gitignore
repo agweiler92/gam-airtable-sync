@@ -2,3 +2,16 @@
 __pycache__/
 *.pyc
 .env
+keys/
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Environment
+.env
+keys/
+
+# Google Cloud SDK
+google-cloud-sdk/
+google-cloud-cli-linux-x86_64.tar.gz
