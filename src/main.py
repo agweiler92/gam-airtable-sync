@@ -1,8 +1,7 @@
-from gam_client import get_network
+from sync_orders import sync_orders
 
-print("Connecting to Google Ad Manager...")
+print("Starting Google Ad Manager Sync...\n")
 
-network = get_network()
+sync_orders()
 
-print("Connected!")
-print(network)
+print("\nDone!")
