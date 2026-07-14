@@ -14,6 +14,10 @@ table = api.table(
     AIRTABLE_TABLE,
 )
 
+print(f"Base ID: {AIRTABLE_BASE_ID!r}")
+print(f"Table ID: {AIRTABLE_TABLE!r}")
+print(f"PAT exists: {AIRTABLE_PAT is not None}")
+
 
 def load_existing_orders():
     """
