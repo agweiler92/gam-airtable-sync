@@ -6,21 +6,6 @@ from config import (
     AIRTABLE_TABLE,
 )
 
-
-# -----------------------------
-# TEMPORARY DEBUG OUTPUT
-# -----------------------------
-print("========== AIRTABLE CONFIG ==========")
-print(f"PAT loaded: {AIRTABLE_PAT is not None}")
-
-if AIRTABLE_PAT:
-    print(f"PAT starts with: {AIRTABLE_PAT[:8]}...")
-
-print(f"Base ID: {repr(AIRTABLE_BASE_ID)}")
-print(f"Table ID: {repr(AIRTABLE_TABLE)}")
-print("=====================================")
-
-
 api = Api(AIRTABLE_PAT)
 
 table = api.table(
@@ -57,6 +42,9 @@ def load_existing_orders():
 
 
 def create_campaign(fields):
+    """
+    Create a new Airtable campaign.
+    """
 
     table.create(fields)
 
@@ -64,6 +52,9 @@ def create_campaign(fields):
 
 
 def update_campaign(record_id, fields):
+    """
+    Update an existing Airtable campaign.
+    """
 
     table.update(record_id, fields)
 
