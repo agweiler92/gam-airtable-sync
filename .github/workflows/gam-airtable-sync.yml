@@ -1,3 +1,13 @@
+- name: Verify GitHub secrets
+  env:
+    AIRTABLE_PAT: ${{ secrets.AIRTABLE_PAT }}
+    AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
+    AIRTABLE_TABLE: ${{ secrets.AIRTABLE_TABLE }}
+  run: |
+    echo "PAT length: ${#AIRTABLE_PAT}"
+    echo "Base ID length: ${#AIRTABLE_BASE_ID}"
+    echo "Table ID length: ${#AIRTABLE_TABLE}"
+    
 name: GAM Airtable Sync
 
 on:
