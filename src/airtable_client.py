@@ -7,6 +7,20 @@ from config import (
 )
 
 
+# -----------------------------
+# TEMPORARY DEBUG OUTPUT
+# -----------------------------
+print("========== AIRTABLE CONFIG ==========")
+print(f"PAT loaded: {AIRTABLE_PAT is not None}")
+
+if AIRTABLE_PAT:
+    print(f"PAT starts with: {AIRTABLE_PAT[:8]}...")
+
+print(f"Base ID: {repr(AIRTABLE_BASE_ID)}")
+print(f"Table ID: {repr(AIRTABLE_TABLE)}")
+print("=====================================")
+
+
 api = Api(AIRTABLE_PAT)
 
 table = api.table(
@@ -14,56 +28,30 @@ table = api.table(
     AIRTABLE_TABLE,
 )
 
-print(f"Base ID: {AIRTABLE_BASE_ID!r}")
-print(f"Table ID: {AIRTABLE_TABLE!r}")
-print(f"PAT exists: {AIRTABLE_PAT is not None}")
-
 
 def load_existing_orders():
     """
-    Load Airtable records that contain
-    a GAM Order ID.
-
-    Records are keyed by GAM Order ID
-    so the sync can update existing
-    records instead of creating duplicates.
+    Load all existing Airtable records keyed by GAM Order ID.
     """
 
     existing = {}
 
-    print(
-        "Loading existing "
-        "Airtable records..."
-    )
+    print("Loading existing Airtable records...")
 
     records = table.all()
 
-    print(
-        f"Airtable returned "
-        f"{len(records)} total records."
-    )
+    print(f"Airtable returned {len(records)} total records.")
 
     for record in records:
 
-        fields = record.get(
-            "fields",
-            {},
-        )
+        fields = record.get("fields", {})
 
-        order_id = fields.get(
-            "GAM Order ID"
-        )
+        order_id = fields.get("GAM Order ID")
 
         if order_id:
+            existing[str(order_id)] = record
 
-            existing[
-                str(order_id)
-            ] = record
-
-    print(
-        f"Loaded {len(existing)} "
-        f"records with a GAM Order ID."
-    )
+    print(f"Loaded {len(existing)} records with a GAM Order ID.")
 
     return existing
 
@@ -72,23 +60,11 @@ def create_campaign(fields):
 
     table.create(fields)
 
-    print(
-        f"Created Order "
-        f"{fields['GAM Order ID']}"
-    )
+    print(f"Created Order {fields['GAM Order ID']}")
 
 
-def update_campaign(
-    record_id,
-    fields,
-):
+def update_campaign(record_id, fields):
 
-    table.update(
-        record_id,
-        fields,
-    )
+    table.update(record_id, fields)
 
-    print(
-        f"Updated Order "
-        f"{fields['GAM Order ID']}"
-    )
+    print(f"Updated Order {fields['GAM Order ID']}")
